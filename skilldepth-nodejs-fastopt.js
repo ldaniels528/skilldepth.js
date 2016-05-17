@@ -11649,12 +11649,25 @@ $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.$$js$exported$meth$s
 });
 $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.startServer__Lcom_github_ldaniels528_meansjs_nodejs_Bootstrap__V = (function(bootstrap) {
   var require = bootstrap.require;
+  var dict = $g.process.env;
+  var this$3 = ($uZ($m_sjs_js_WrappedDictionary$Cache$().safeHasOwnProperty$1.call(dict, "PORT")) ? new $c_s_Some().init___O(dict.PORT) : $m_s_None$());
+  if (this$3.isEmpty__Z()) {
+    var this$8 = $m_s_None$()
+  } else {
+    var arg1 = this$3.get__O();
+    var x$1 = $as_T(arg1);
+    var this$5 = new $c_sci_StringOps().init___T(x$1);
+    var this$7 = $m_jl_Integer$();
+    var s = this$5.repr$1;
+    var this$8 = new $c_s_Some().init___O(this$7.parseInt__T__I__I(s, 10))
+  };
+  var port = $uI((this$8.isEmpty__Z() ? 8888 : this$8.get__O()));
   var array = $g.process.argv;
   var until = $uI(array.length);
   var x = ((until > 0) ? until : 0);
   var y = $uI(array.length);
   var hi = ((x < y) ? x : y);
-  var x$1 = (((-2) + hi) | 0);
+  var x$2 = (((-2) + hi) | 0);
   var array$1 = [];
   var i = 2;
   while ((i < hi)) {
@@ -11663,36 +11676,9 @@ $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.startServer__Lcom_gi
     array$1.push(elem);
     i = ((1 + i) | 0)
   };
-  var this$11 = new $c_sjs_js_ArrayOps().init___sjs_js_Array(array$1);
-  var this$12 = $s_sc_TraversableLike$class__headOption__sc_TraversableLike__s_Option(this$11);
-  if (this$12.isEmpty__Z()) {
-    var this$17 = $m_s_None$()
-  } else {
-    var arg1 = this$12.get__O();
-    var x$1$1 = $as_T(arg1);
-    var this$14 = new $c_sci_StringOps().init___T(x$1$1);
-    var this$16 = $m_jl_Integer$();
-    var s = this$14.repr$1;
-    var this$17 = new $c_s_Some().init___O(this$16.parseInt__T__I__I(s, 10))
-  };
-  var port = $uI((this$17.isEmpty__Z() ? 8888 : this$17.get__O()));
-  var array$2 = $g.process.argv;
-  var until$1 = $uI(array$2.length);
-  var x$2 = ((until$1 > 0) ? until$1 : 0);
-  var y$1 = $uI(array$2.length);
-  var hi$1 = ((x$2 < y$1) ? x$2 : y$1);
-  var x$3 = (((-3) + hi$1) | 0);
-  var array$3 = [];
-  var i$1 = 3;
-  while ((i$1 < hi$1)) {
-    var index$1 = i$1;
-    var elem$1 = array$2[index$1];
-    array$3.push(elem$1);
-    i$1 = ((1 + i$1) | 0)
-  };
-  var this$28 = new $c_sjs_js_ArrayOps().init___sjs_js_Array(array$3);
-  var this$29 = $s_sc_TraversableLike$class__headOption__sc_TraversableLike__s_Option(this$28);
-  var mongoHosts = $as_T((this$29.isEmpty__Z() ? "localhost:27017" : this$29.get__O()));
+  var this$19 = new $c_sjs_js_ArrayOps().init___sjs_js_Array(array$1);
+  var this$20 = $s_sc_TraversableLike$class__headOption__sc_TraversableLike__s_Option(this$19);
+  var mongoHosts = $as_T((this$20.isEmpty__Z() ? "localhost:27017" : this$20.get__O()));
   $g.console.log("Loading Express modules...");
   var express = require("express");
   var app = express();
