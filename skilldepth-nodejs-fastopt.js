@@ -11650,7 +11650,7 @@ $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.$$js$exported$meth$s
 $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.startServer__Lcom_github_ldaniels528_meansjs_nodejs_Bootstrap__V = (function(bootstrap) {
   var require = bootstrap.require;
   var dict = $g.process.env;
-  var this$3 = ($uZ($m_sjs_js_WrappedDictionary$Cache$().safeHasOwnProperty$1.call(dict, "PORT")) ? new $c_s_Some().init___O(dict.PORT) : $m_s_None$());
+  var this$3 = ($uZ($m_sjs_js_WrappedDictionary$Cache$().safeHasOwnProperty$1.call(dict, "port")) ? new $c_s_Some().init___O(dict.port) : $m_s_None$());
   if (this$3.isEmpty__Z()) {
     var this$8 = $m_s_None$()
   } else {
@@ -11661,24 +11661,10 @@ $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.startServer__Lcom_gi
     var s = this$5.repr$1;
     var this$8 = new $c_s_Some().init___O(this$7.parseInt__T__I__I(s, 10))
   };
-  var port = $uI((this$8.isEmpty__Z() ? 8888 : this$8.get__O()));
-  var array = $g.process.argv;
-  var until = $uI(array.length);
-  var x = ((until > 0) ? until : 0);
-  var y = $uI(array.length);
-  var hi = ((x < y) ? x : y);
-  var x$2 = (((-2) + hi) | 0);
-  var array$1 = [];
-  var i = 2;
-  while ((i < hi)) {
-    var index = i;
-    var elem = array[index];
-    array$1.push(elem);
-    i = ((1 + i) | 0)
-  };
-  var this$19 = new $c_sjs_js_ArrayOps().init___sjs_js_Array(array$1);
-  var this$20 = $s_sc_TraversableLike$class__headOption__sc_TraversableLike__s_Option(this$19);
-  var mongoHosts = $as_T((this$20.isEmpty__Z() ? "localhost:27017" : this$20.get__O()));
+  var port = $uI((this$8.isEmpty__Z() ? 1337 : this$8.get__O()));
+  var dict$1 = $g.process.env;
+  var this$11 = ($uZ($m_sjs_js_WrappedDictionary$Cache$().safeHasOwnProperty$1.call(dict$1, "servers")) ? new $c_s_Some().init___O(dict$1.servers) : $m_s_None$());
+  var mongoServers = $as_T((this$11.isEmpty__Z() ? "localhost:27017" : this$11.get__O()));
   $g.console.log("Loading Express modules...");
   var express = require("express");
   var app = express();
@@ -11697,7 +11683,7 @@ $c_Lcom_skilldepth_javascript_SkillDepthJSServer$.prototype.startServer__Lcom_gi
       return f.apply__O__O__O__O(arg1$1, arg2, arg3)
     })
   })(new $c_Lcom_skilldepth_javascript_SkillDepthJSServer$$anonfun$startServer$2().init___()));
-  var mongoUrl = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["mongodb://", "/skilldial"])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([mongoHosts]));
+  var mongoUrl = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["mongodb://", "/skilldial"])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([mongoServers]));
   $g.console.log("Connecting to %s", mongoUrl);
   var $$this$2 = mongodb.MongoClient;
   var promise = new $c_s_concurrent_impl_Promise$DefaultPromise().init___();
