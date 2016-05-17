@@ -1,0 +1,2 @@
+# skilldepth.js
+SkillDepth distributable
