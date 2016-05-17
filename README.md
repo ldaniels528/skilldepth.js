@@ -6,6 +6,8 @@ A resource for developing new skills and discovering new opportunities.
 SkillDepth is a portal and social network-based application that empowers technology professionals to discover
 new opportunities, develop new or improve existing skills, and share ideas.
 
+**NOTE**: This project does not contain the original sources for SkillDepth, and is meant only as deployment staging area.
+
 ## Software Stack
 
 SkillDepth uses the [MEANS.js](https://github.com/ldaniels528/MEANS.js) stack:
