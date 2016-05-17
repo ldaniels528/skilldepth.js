@@ -1,0 +1,9 @@
+<div ng-repeat="result in testResults | orderBy:'-creationTime' | limitTo:9">
+    {{ $index + 1 }}.
+    <i class="fa fa-trophy sk_trophy"></i>
+    <span ng-class="getPercentClass(computePercentResult(result))">{{ computePercentResult(result) | number:1 }}%</span>
+    <span class="small pull-right home_mini_label">{{ result.creationTime | duration }}</span>
+</div>
+<div ng-hide="testResults.length">
+    <span class="sk_null">No tests found</span>
+</div>

@@ -1,0 +1,76 @@
+<div ng-controller="TestDetailsController" ng-init="initDetails()" style="padding: 5px">
+    <div ng-hide="test">
+        <span class="sk_null bold">No test selected</span>
+    </div>
+    <div ng-show="test">
+        <h4>
+            {{ test.name }}
+            <span ng-click="navigateToTakeTest(test._id)" class="btn btn-success btn-sm">
+                <i class="fa fa-pencil-square-o"></i> Take
+            </span>
+            <span ng-show="test.description">
+                <span class="sk_null">&#8212;</span>
+                <span class="small">{{ test.description }}</span>
+            </span>
+        </h4>
+
+        <div ng-show="test.submitter">
+            <span class="bold">Author: </span>
+            <a ng-href="/#/profile/{{ test.submitter._id }}">
+                <img class="avatar16" ng-src="{{ getAvatarURL(test.submitter) }}">
+                <span>{{ test.submitter.name }}</span>
+            </a>
+        </div>
+
+        <div class="col-md-12 home_border" style="padding: 5px; margin-bottom: 10px">
+            <div class="col-md-4">
+                <span class="bold">Created: </span>
+                <span>{{ test.creationTime | duration }}</span>
+            </div>
+            <div class="col-md-4">
+                <span class="bold">Last Modified: </span>
+                <span ng-show="test.lastModified">{{ test.lastModified | duration }}</span>
+                <span ng-hide="test.lastModified" class="sk_null">Never</span>
+            </div>
+            <div>
+                <span ng-hide="isLikedTest(test)">
+                    <i class="hash_tag fa fa-thumbs-o-up"></i>
+                    <span ng-hide="test.likeLoading"><a class="hash_tag" ng-click="likeTest(test)">Like</a></span>
+                    <img ng-show="test.likeLoading" src="/images/status/loading16.gif">
+                </span>
+                <span ng-show="isLikedTest(test)">
+                    <i class="hash_tag fa fa-thumbs-up"></i>
+                    <span ng-hide="test.likeLoading"><a class="hash_tag"  ng-click="unlikeTest(test)">Liked</a></span>
+                    <img ng-show="test.likeLoading" src="/images/status/loading16.gif">
+                </span>
+                <span class="home_mini_label small" ng-show="test.likes">({{ test.likes | number }})</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px">
+            <div style="margin-bottom: 5px">
+                <div class="col-md-9">
+                    <span class="bold">Tags:</span>
+                    <span ng-repeat="tag in getTags(test)" class="skill_tag">{{ tag }}</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="bold pull-right">{{ testQuestions.length }} questions</span>
+                </div>
+            </div>
+            <div ng-repeat="q in testQuestions">
+                <i ng-click="toggleQuestion(q)"
+                   ng-class="q.showAnswers ? 'fa-minus-square-o' : 'fa-plus-square-o'"
+                   class="fa fa-plus-square-o sk_clickable"></i>
+                <span class="home_mini_label">{{ q.question }}</span>
+                <span ng-repeat="tag in q.tags" class="skill_tag">{{ tag }}</span>
+
+                <div ng-if="q.showAnswers">
+                    <pre ng-if="q.code">{{ q.code }}</pre>
+                    <ol class="skill_list">
+                        <li ng-repeat="answer in q.answers">{{ answer.text }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

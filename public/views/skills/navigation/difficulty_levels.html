@@ -1,0 +1,6 @@
+<div ng-repeat="label in difficultyLevels">
+    <input type="radio" name="difficultyLevel"
+           ng-model="filterOptions.difficulty"
+           ng-value="$index"
+           ng-change="updateFilter()"> {{ label }}
+</div>

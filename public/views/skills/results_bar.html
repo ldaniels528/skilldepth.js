@@ -1,0 +1,15 @@
+<div class="skill_results_bar" ng-if="filterOptions.learningMode === 'STUDY'">
+    <span class="bold">Study Mode:</span>
+    <span class="pull-right">
+        <span class="bold">Questions Remaining:</span> {{ countUnviewedQuestions() }}
+    </span>
+</div>
+
+<div class="skill_results_bar" ng-if="filterOptions.learningMode === 'TEST'">
+    <span class="bold">Test Results:</span>
+    {{ countCorrectAnswers() }}  / {{ filteredQuestions.length }} &#8212;
+    <span ng-class="getPercentClass(computePercentCorrect())">{{ computePercentCorrect() | number:1 }}%</span>
+    <span class="pull-right">
+        <span class="bold">Questions Remaining:</span> {{ countRemainingQuestions() }}
+    </span>
+</div>

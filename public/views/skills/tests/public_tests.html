@@ -1,0 +1,5 @@
+<span ng-hide="getOtherTests().length" class="sk_null">No tests found</span>
+<div ng-repeat="test in getOtherTests() | orderBy:'name'">
+    <img class="avatar16" ng-src="{{ getAvatarURL(test.submitter) }}">
+    <span ng-click="navigateToTestDetails(test._id)" class="sk_clickable">{{ test.name }}</span>
+</div>

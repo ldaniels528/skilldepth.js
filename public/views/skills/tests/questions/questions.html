@@ -1,0 +1,58 @@
+<div ng-controller="TestTakeController" ng-init="initQuestions()">
+    <div ng-hide="currentTest">
+        <span class="sk_null bold">No test selected</span>
+    </div>
+    <div ng-show="currentTest">
+        <h4>
+            <img class="avatar16" ng-src="{{ getAvatarURL(currentTest.submitter) }}"> {{ currentTest.name }}
+            <span ng-show="currentTest.description">
+                <span class="sk_null">&#8212;</span>
+                <span class="small">{{ currentTest.description }}</span>
+            </span>
+        </h4>
+
+        <div ng-include src="'/views/skills/results_bar.html'"></div>
+
+        <div ng-if="questionsLoading || !filteredQuestions.length">
+            <span class="bold skill_warning" ng-hide="questionsLoading">
+                No questions and answers available
+            </span>
+            <span class="bold" ng-show="questionsLoading">
+                <img src="/images/status/loading16.gif"> Loading...
+            </span>
+        </div>
+
+        <div ng-repeat="q in filteredQuestions">
+            <div class="skill_pad_10">
+                <div style="padding-bottom: 4px">
+                    {{ 1 + $index }}.
+                    <span class="home_mini_label">{{ q.question }}</span>
+                    <span ng-repeat="tag in q.tags" class="skill_tag">{{ tag }}</span>
+                </div>
+                <pre ng-show="q.code">{{ q.code }}</pre>
+                <ol class="skill_list">
+                    <li ng-repeat="answer in q.answers">
+                        <span ng-if="q.answered">
+                            <span ng-if="q.myAnswerIndex === $index">
+                                <i ng-class="isCorrect(q, $index) ? 'skill_correct' : 'skill_incorrect'" class="fa fa-check-circle-o"></i>
+                            </span>
+                            <span ng-if="q.myAnswerIndex !== $index">
+                                <i ng-class="isCorrect(q, $index) ? 'skill_correct' : 'skill_null'" class="fa fa-circle-o"></i>
+                            </span>
+                        </span>
+                        <input type="radio" name="answer" ng-model="q.myAnswerIndex" ng-value="$index" ng-if="!q.answered"> {{ answer.text }}
+                    </li>
+                </ol>
+                &nbsp;
+                <span ng-if="!q.answered" class="btn btn-primary btn-sm" ng-click="answerQuestion(q)">
+                    <i class="fa fa-arrow-circle-right"></i> Answer
+                </span>
+                <span ng-if="q.answered">
+                    <span class="bold">Answered</span> &#8212;
+                    <span ng-show="isCorrect(q, q.myAnswerIndex)" class="skill_correct bold">Correct</span>
+                    <span ng-hide="isCorrect(q, q.myAnswerIndex)" class="skill_incorrect bold">Incorrect</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

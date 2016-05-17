@@ -1,0 +1,6 @@
+<div ng-repeat="mode in learningModes">
+    <input type="radio" name="learningMode"
+           ng-model="filterOptions.learningMode"
+           ng-value="mode.value"
+           ng-change="updateFilter()"> {{ mode.label }}
+</div>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="SkillDepth">
+<head>
+    <title>SkillDepth: Created for Techies by Techies</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="developer development employment job opportunties skills socialnetwork software">
+    <meta name="og:title" content="SkillDepth - Advance your career now!">
+    <meta name="og:description" content="The ultimate skill and advancement tool">
+    <meta name="og:url" content="http://skilldepth.cloudapp.net">
+    <meta name="og:site_name" content="SkillDepth">
+    <meta name="og:image" content="/images/thumbnails/SkillDepth_thumbnail.png">
+    <link href="images/favicon.png" type="image/png" rel="shortcut icon">
+
+    <!-- WebJar JS Stylesheets -->
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen">
+    <link href="/bower_components/AngularJS-Toaster/toaster.min.css" type="text/css" rel="stylesheet" media="screen">
+
+    <!-- Skilled Stylesheets -->
+    <link href="stylesheets/about.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/icons.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/index.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/home/home.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/home/photos.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/jobs.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/skills.css" type="text/css" rel="stylesheet" media=screen>
+    <link href="stylesheets/tabs.css" type="text/css" rel="stylesheet" media=screen>
+
+    <!-- WebJar JS libraries -->
+    <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="/bower_components/AngularJS-Toaster/toaster.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js" type="text/javascript"></script>
+
+    <!-- Scala.js Resources -->
+    <script src="javascripts/skilldepth-angularjs-fastopt.js"></script>
+    <script src="javascripts/skilldepth-angularjs-launcher.js"></script>
+
+    <script type="application/javascript">
+        (function() {
+            var app = angular.module("SkillDepth");
+
+            app.directive("compile", ["$compile", function ($compile) {
+                return function(scope, element, attrs) {
+                    scope.$watch(
+                            function(scope) {
+                                // watch the 'compile' expression for changes
+                                return scope.$eval(attrs.compile);
+                            },
+                            function(value) {
+                                // when the 'compile' expression changes
+                                // assign it into the current DOM
+                                element.html(value);
+
+                                // compile the new DOM and link it to the current scope.
+                                // NOTE: we only compile .childNodes so that we don't get into infinite loop compiling ourselves
+                                $compile(element.contents())(scope);
+                            }
+                    );
+                };
+            }]);
+
+            app.directive("ngThumb", ["$window", function($window) {
+                var helper = {
+                    support: !!($window.FileReader && $window.CanvasRenderingContext2D),
+                    isFile: function(item) {
+                        return angular.isObject(item) && item instanceof $window.File;
+                    },
+                    isImage: function(file) {
+                        var type =  "|" + file.type.slice(file.type.lastIndexOf("/") + 1) + "|";
+                        return "|jpg|png|jpeg|bmp|gif|".indexOf(type) !== -1;
+                    }
+                };
+
+                return {
+                    restrict: "A",
+                    template: "<canvas/>",
+                    link: function(scope, element, attributes) {
+                        if (!helper.support) return;
+
+                        var params = scope.$eval(attributes.ngThumb);
+
+                        if (!helper.isFile(params.file)) return;
+                        if (!helper.isImage(params.file)) return;
+
+                        var canvas = element.find("canvas");
+                        var reader = new FileReader();
+
+                        reader.onload = onLoadFile;
+                        reader.readAsDataURL(params.file);
+
+                        function onLoadFile(event) {
+                            var img = new Image();
+                            img.onload = onLoadImage;
+                            img.src = event.target.result;
+                        }
+
+                        function onLoadImage() {
+                            var width = params.width || this.width / this.height * params.height;
+                            var height = params.height || this.height / this.width * params.width;
+                            canvas.attr({ width: width, height: height });
+                            canvas[0].getContext("2d").drawImage(this, 0, 0, width, height);
+                        }
+                    }
+                };
+            }]);
+
+        })();
+    </script>
+
+    <!-- Facebook injection -->
+    <script>
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- LinkedIn injection -->
+    <script type="text/javascript" src="//platform.linkedin.com/in.js">
+        api_key: 7540pqsj0kbbhp
+        authorize: true
+        onLoad: linkedInInit
+        scope: r_basicprofile r_emailaddress rw_company_admin w_share
+    </script>
+</head>
+
+<body id="Main" ng-controller="MainController" ng-init="init()" ng-cloak>
+    <div ng-if="!isLoginPage()" class="row">
+        <div class="form-group" ng-include src="'/views/partials/header.html'"></div>
+    </div>
+
+    <toaster-container toaster-options="{'position-class': 'toast-container','time-out': 3000, 'close-button':true}">
+    </toaster-container>
+
+    <div ng-view ng-cloak></div>
+    <div style="display: none" id="fb-root"></div>
+    <div ng-include src="'/views/partials/reactive_search.html'"></div>
+</body>
+</html>

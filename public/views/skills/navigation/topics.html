@@ -1,0 +1,5 @@
+<span class="col-md-3" ng-repeat="(tag, total) in questionTags | orderBy:tag">
+    <input type="checkbox" ng-model="selectedTags[tag]" ng-change="updateFilter()">
+    {{ tag | capitalize }} <span class="home_mini_label small">({{ total | number }})</span>
+</span>
+<br style="clear: both">

@@ -1,0 +1,19 @@
+
+# Install the Node.js application dependencies
+npm install
+
+# Fixes issue for bower
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+# Install bower
+npm install -g bower grunt grunt-cli
+
+# build
+sbt "project nodejs" fastOptJS
+
+# run locally
+cd app-nodejs/
+node ./dev-server.js
+
+# package distributable (skilldepth.zip)
+./bundle.sh

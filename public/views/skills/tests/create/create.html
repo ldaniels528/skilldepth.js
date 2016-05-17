@@ -1,0 +1,82 @@
+<div ng-controller="TestCreationController" ng-init="initCreation()">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12"><h4>TEST MANAGEMENT</h4></div>
+            <div class="col-md-8">
+                <div style="margin-bottom: 5px">
+                    <input type="text"
+                           ng-model="currentTest.name"
+                           class="form-control"
+                           placeholder="Test name">
+                </div>
+                <div style="margin-bottom: 5px">
+                    <textarea ng-model="currentTest.description"
+                              class="form-control"
+                              rows="2"
+                              placeholder="Test description"></textarea>
+                </div>
+                <div class="home_border" style="margin-bottom: 5px; padding: 5px">
+                    <div class="home_label">AVAILABLE TOPICS</div>
+                    <div ng-include src="'/views/skills/navigation/topics.html'"></div>
+                </div>
+                <div style="margin-bottom: 5px">
+                    <span ng-disabled="!testQuestions.length || !currentTest.name.trim().length"
+                          ng-click="saveTest()"
+                          class="btn btn-success btn-sm">Save</span>
+
+                    <span ng-disabled="!testQuestions.length && !currentTest.name.trim().length"
+                          ng-click="resetTest()"
+                          class="btn btn-warning btn-sm pull-right">Cancel</span>
+                </div>
+            </div>
+
+            <div class="col-md-3 home_border" style="height: 170px">
+                <div class="home_label" style="padding: 5px">DIFFICULTY LEVEL</div>
+                <div ng-include src="'/views/skills/navigation/difficulty_levels.html'"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4 style="margin-top: 20px">Included Questions <span class="home_mini_label small">({{ testQuestions.length }})</span></h4>
+            <span ng-hide="testQuestions.length" class="sk_null">No questions included</span>
+
+            <div ng-repeat="q in testQuestions">
+                <i ng-click="removeFromTest(q)" class="fa fa-remove sk_delete_icon sk_clickable" title="Remove question"></i>
+                <span class="home_mini_label">{{ q.question }}</span>
+                <span ng-repeat="tag in q.tags" class="skill_tag">{{ tag }}</span>
+            </div>
+        </div>
+
+        <div class="col-md-6 home_border_left">
+            <h4 style="margin-top: 20px">Available Questions <span class="home_mini_label small">({{ filteredQuestions.length }})</span></h4>
+            <span ng-hide="filteredQuestions.length" class="sk_null">No questions found</span>
+            <div ng-repeat="q in filteredQuestions">
+                <span ng-hide="isInTest(q)">
+                    <i ng-click="addToTest(q)" class="fa fa-arrow-left sk_add_icon sk_clickable"></i>
+                    <i ng-click="toggleQuestion(q)"
+                       ng-class="q.showAnswers ? 'fa-minus-square-o' : 'fa-plus-square-o'"
+                       class="fa sk_clickable" style="padding: 0px 1px 0px 2px"></i>
+                    <span class="home_mini_label">{{ q.question }}</span>
+                    <span ng-repeat="tag in q.tags" class="skill_tag">{{ tag }}</span>
+                </span>
+                <span ng-show="isInTest(q)">
+                    <i class="fa fa-arrow-left sk_null"></i>
+                    <i ng-click="toggleQuestion(q)"
+                       ng-class="q.showAnswers ? 'fa-minus-square-o' : 'fa-plus-square-o'"
+                       class="fa sk_clickable" style="padding: 0px 1px 0px 2px"></i>
+                    <span class="sk_null">{{ q.question }}</span>
+                    <span ng-repeat="tag in q.tags" class="skill_tag_null">{{ tag }}</span>
+                </span>
+
+                <div ng-if="q.showAnswers" class="skill_border">
+                    <pre ng-if="q.code">{{ q.code }}</pre>
+                    <ol class="skill_list">
+                        <li ng-repeat="answer in q.answers">{{ answer.text }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

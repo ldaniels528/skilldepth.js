@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+        <span class="home_label">MY FOLLOWERS <span class="small">({{ followers.length || 0 | number }})</span></span>
+    </div>
+    <div class="col-md-12" ng-repeat="follower in followers">
+        <img class="avatar16" ng-if="follower.avatarURL" ng-src="{{ follower.avatarURL }}">
+        <span ng-click="navigateToProfileViewer(follower._id)" class="sk_clickable">{{ showFullName(follower) }}</span>
+        <img ng-show="getOnlineStatus(follower) == 'GREEN'" class="pull-right" src="/images/status/greenlight.png">
+        <img ng-show="getOnlineStatus(follower) == 'YELLOW'" class="pull-right" src="/images/status/yellowlight.gif">
+        <img ng-hide="getOnlineStatus(follower)" class="pull-right" src="/images/status/offlight.png">
+    </div>
+    <div ng-hide="isLoading() || followers.length" class="col-md-12">
+        <span class="sk_null">No followers found</span>
+    </div>
+
+    <div class="col-md-12" style="margin-top: 20px">
+        <span class="home_label">MY ENTOURAGE <span class="small">({{ getFacebookFriends().length || 0 | number }})</span></span>
+    </div>
+    <div ng-hide="isFacebookConnected() && isLinkedInConnected()" class="col-md-11 home_entourage_missing">
+        <span>
+            <i class="fa fa-lightbulb-o sk_icon_bulb"></i>
+            You don't seem to have an entourage. However, you can leverage your
+            <nobr><i class="fa fa-facebook-official sk_icon_facebook"></i> Facebook</nobr> and/or
+            <nobr><i class="fa fa-linkedin-square sk_icon_linkedin"></i> LinkedIn accounts</nobr>
+            to instantly create an entourage from your existing friends and colleagues.
+        </span>
+    </div>
+    <div class="col-md-12" ng-hide="isFacebookConnected()">
+        <i class="fa fa-facebook-official sk_icon_facebook"></i> <a ng-click="loginToFacebook()">Login to Facebook</a>
+    </div>
+    <div class="col-md-12">
+        <script type="IN/Login"
+                data-onAuth="Linkedin.onAuthCallback"
+                data-onLogout="Linkedin.onLogoutCallback">
+        <img src="http://dummyimage.com/1x1/F.gif">
+    </script>
+    </div>
+    <div ng-show="isFacebookConnected()" class="home_entourage_container">
+        <div class="col-md-12" ng-repeat="friend in getFacebookFriends()">
+            <i class="fa fa-facebook-official sk_icon_facebook"></i>
+            <img class="avatar16" ng-src="{{ friend.picture.data.url }}">
+            {{ friend.name }}
+            <img ng-show="getOnlineStatus(friend) == 'GREEN'" class="pull-right" src="/images/status/greenlight.png">
+            <img ng-show="getOnlineStatus(friend) == 'YELLOW'" class="pull-right" src="/images/status/yellowlight.gif">
+            <img ng-if="!getOnlineStatus(friend)"  class="pull-right" src="/images/status/offlight.png">
+        </div>
+    </div>
+</div>

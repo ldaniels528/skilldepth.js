@@ -1,0 +1,12 @@
+<div>
+    <a ng-click="navigateToCreateTest()">
+        <i class="fa fa-pencil-square sk_test"></i>
+        <span class="sk_clickable">Create New Test</span>
+    </a>
+</div>
+
+<div ng-repeat="test in getMyTests() | orderBy:'name'">
+    <i class="fa fa-pencil-square-o sk_test"></i>
+    <span ng-click="navigateToTestDetails(test._id)" class="sk_clickable">{{ test.name }}</span>
+    <i ng-click="navigateToEditTest(test._id)" class="fa fa-wrench sk_info sk_clickable"></i>
+</div>
