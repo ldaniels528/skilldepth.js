@@ -8,7 +8,7 @@ new opportunities, develop new or improve existing skills, and share ideas.
 
 ## Software Stack
 
-SkillDepth uses the (MEANS.js)[https://github.com/ldaniels528/MEANS.js] stack:
+SkillDepth uses the [MEANS.js](https://github.com/ldaniels528/MEANS.js) stack:
 
 * MongoDB 3.2.x
 * Express 4.x
